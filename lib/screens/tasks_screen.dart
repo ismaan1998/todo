@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/models/task.dart';
+import 'package:todo/models/task_data.dart';
 import 'package:todo/screens/add_task_screen.dart';
 import 'package:todo/widgets/task_list.dart';
 
-class TasksScreen extends StatefulWidget {
+class TasksScreen extends StatelessWidget {
 
-
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'buy eggs'),
-    Task(name: 'buy bread'),
-  ];
 
   Widget buildBottomSheet(BuildContext context){
     return Container(
       color: Color(0xFF757575),
-      child: AddTaskScreen(addTaskCallback: (newTextTitle){
-       setState(() {
-         tasks.add(Task(name:newTextTitle));
-       });;
-      },),);
+      child: AddTaskScreen(),);
   }
 
   @override
@@ -64,7 +51,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontSize: 50),
                 ),
                 Text(
-                  '${tasks.length} tasks',
+                  '${Provider.of<TaskData>(context).taskCount} tasks',
                   style: TextStyle(color: Colors.white, fontSize: 18),
                 ),
               ],
@@ -78,7 +65,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20))),
-              child: TasksList(tasks),
+              child: TasksList(),
             ),
           ),
         ],
